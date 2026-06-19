@@ -3,15 +3,28 @@
         xmlns:http="http://www.mulesoft.org/schema/mule/http"
         xmlns="http://www.mulesoft.org/schema/mule/core"
         xmlns:domain="http://www.mulesoft.org/schema/mule/ee/domain"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+        xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+        xsi:schemaLocation="
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/ee/domain http://www.mulesoft.org/schema/mule/ee/domain/current/mule-domain-ee.xsd
-http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+               http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+               http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd"> <global-property name="http.host" value="0.0.0.0" />
+    <global-property name="https.port" value="8443" />
+    <global-property name="tls.listener.path" value="cert/keystore.bcfks" />
+    <global-property name="tls.listener.alias" value="mule" />
+    <global-property name="tls.listener.password" value="mulepass" />
 
-    <!-- configure here resource to be shared within the domain -->
-	<http:listener-config name="Shared_HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="9c190112-a996-4058-955a-5e7f7e902b0e" >
-		<http:listener-connection host="0.0.0.0" port="8082" />
-	</http:listener-config>
+    <http:listener-config name="sharedHttpListenerConfig">
+        <http:listener-connection host="0.0.0.0" port="8082" readTimeout="60000" protocol="HTTPS">
+            <tls:context>
+                <tls:key-store type="BCFKS" 
+                               path="cert/keystore.bcfks"
+                               alias="mule"  
+                               keyPassword="mulepass"
+                               password="mulepass" />
+            </tls:context>
+        </http:listener-connection>
+    </http:listener-config>
 
 </domain:mule-domain>

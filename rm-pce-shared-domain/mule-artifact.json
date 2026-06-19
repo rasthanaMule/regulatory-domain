@@ -1,4 +1,8 @@
 {
-    "minMuleVersion": "4.11.0",
-    "javaSpecificationVersions": ["17"]
+  "minMuleVersion": "4.9.9",
+  "requiredProduct": "MULE_EE",
+  "domain": "rm-pce-shared-domain",
+  "javaSpecificationVersions": [
+    "17"
+  ]
 }
