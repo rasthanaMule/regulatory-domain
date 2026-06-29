@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <domain:mule-domain
-        xmlns:http="http://www.mulesoft.org/schema/mule/http"
-        xmlns="http://www.mulesoft.org/schema/mule/core"
-        xmlns:domain="http://www.mulesoft.org/schema/mule/ee/domain"
-        xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
-        xsi:schemaLocation="
-               http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-               http://www.mulesoft.org/schema/mule/ee/domain http://www.mulesoft.org/schema/mule/ee/domain/current/mule-domain-ee.xsd
-               http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
-               http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd"> <global-property name="http.host" value="0.0.0.0" />
-    <global-property name="https.port" value="8443" />
-    <global-property name="tls.listener.path" value="cert/keystore.bcfks" />
-    <global-property name="tls.listener.alias" value="mule" />
-    <global-property name="tls.listener.password" value="mulepass" />
+    xmlns:http="http://www.mulesoft.org/schema/mule/http"
+    xmlns="http://www.mulesoft.org/schema/mule/core"
+    xmlns:domain="http://www.mulesoft.org/schema/mule/ee/domain"
+    xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/ee/domain http://www.mulesoft.org/schema/mule/ee/domain/current/mule-domain-ee.xsd
+        http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+        http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
+
+    <configuration-properties file="config.yaml" />
 
     <http:listener-config name="sharedHttpListenerConfig">
-        <http:listener-connection host="0.0.0.0" port="8082" readTimeout="60000" protocol="HTTPS">
+        <http:listener-connection
+            host="${http.host}"
+            port="${https.port}"
+            readTimeout="${http.listener.readTimeout}"
+            protocol="${http.listener.protocol}">
             <tls:context>
-                <tls:key-store type="BCFKS" 
-                               path="cert/keystore.bcfks"
-                               alias="mule"  
-                               keyPassword="mulepass"
-                               password="mulepass" />
+                <tls:key-store
+                    type="${tls.listener.keystore.type}"
+                    path="${tls.listener.path}"
+                    alias="${tls.listener.alias}"
+                    keyPassword="${tls.listener.password}"
+                    password="${tls.listener.password}" />
             </tls:context>
         </http:listener-connection>
     </http:listener-config>

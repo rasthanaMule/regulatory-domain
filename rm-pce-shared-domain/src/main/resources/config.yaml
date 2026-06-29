@@ -1,0 +1,16 @@
+http:
+  host: "0.0.0.0"
+  listener:
+    readTimeout: "60000"
+    protocol: "HTTPS"
+
+https:
+  port: "8082"
+
+tls:
+  listener:
+    keystore:
+      type: "BCFKS"
+    path: "cert/keystore.bcfks"
+    alias: "mule"
+    password: "mulepass"
